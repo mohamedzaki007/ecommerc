@@ -1,5 +1,3 @@
-// src/components/cart/CartDetail.tsx
-
 "use client";
 
 import React from 'react';
@@ -7,15 +5,25 @@ import { useCart } from '@/context/CartContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiTrash2, FiPlus, FiMinus } from 'react-icons/fi';
-// 💡 استيراد مكونات الجدول من Shadcn/ui (يجب أن يكون المسار صحيحاً)
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"; 
-
-// ... (بقية الكود)
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default function CartDetail() {
-    const { cartItems, removeItem, addItem, totalAmount, clearCart } = useCart();
-    
-    // ... (منطق السلة فارغة) ...
+    const { cartItems, removeItem, addItem, clearCart, updateItemQuantity } = useCart();
+
+    if (cartItems.length === 0) {
+        return (
+            <div className="max-w-7xl mx-auto px-4 py-8 text-center">
+                <h1 className="text-4xl font-extrabold mb-4">Your Cart is Empty</h1>
+                {/* eslint-disable-next-line react/no-unescaped-entities */}
+                <p className="text-gray-600 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                <Link href="/products">
+                    <button className="bg-gray-800 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-900 transition-colors">
+                        Start Shopping
+                    </button>
+                </Link>
+            </div>
+        );
+    }
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -23,10 +31,8 @@ export default function CartDetail() {
             
             <div className="flex flex-col lg:flex-row gap-10">
                 
-                {/* 1. قائمة المنتجات (العمود الأيسر) - سيتم عرضها كجدول */}
                 <div className="lg:w-8/12 space-y-4">
                     
-                    {/* 🚨 هنا نستخدم مكون الجدول Shadcn/ui 🚨 */}
                     <Table>
                         <TableCaption>A list of all items currently in your cart.</TableCaption>
                         <TableHeader>
@@ -41,7 +47,6 @@ export default function CartDetail() {
                         </TableHeader>
                         
                         <TableBody>
-                            {/* 💡 التكرار على العناصر الحقيقية في السلة */}
                             {cartItems.map((item) => (
                                 <TableRow key={item.id}>
                                     
@@ -59,9 +64,9 @@ export default function CartDetail() {
                                     
                                     <TableCell>
                                         <div className="flex items-center">
-                                            <button onClick={() => removeItem(item.id)} className="p-1 border rounded-md hover:bg-gray-100"><FiMinus size={14} /></button>
+                                            <button onClick={() => updateItemQuantity(item.id, 'decrease')} className="p-1 border rounded-md hover:bg-gray-100"><FiMinus size={14} /></button>
                                             <span className="mx-2">{item.quantity}</span>
-                                            <button onClick={() => addItem(item)} className="p-1 border rounded-md hover:bg-gray-100"><FiPlus size={14} /></button>
+                                            <button onClick={() => updateItemQuantity(item.id, 'increase')} className="p-1 border rounded-md hover:bg-gray-100"><FiPlus size={14} /></button>
                                         </div>
                                     </TableCell>
                                     
@@ -72,7 +77,7 @@ export default function CartDetail() {
                                     </TableCell>
                                     
                                     <TableCell className="text-center">
-                                        <button onClick={() => clearCart(item.id)} className="text-red-500 hover:text-red-700">
+                                        <button onClick={() => removeItem(item.id)} className="text-red-500 hover:text-red-700">
                                             <FiTrash2 size={20} />
                                         </button>
                                     </TableCell>
@@ -88,9 +93,6 @@ export default function CartDetail() {
                         Clear All Items
                     </button>
                 </div>
-
-                {/* 2. ملخص الطلب (العمود الأيمن) */}
-                {/* ... (كود ملخص الطلب) ... */}
             </div>
         </div>
     );

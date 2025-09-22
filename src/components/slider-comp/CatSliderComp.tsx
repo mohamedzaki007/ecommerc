@@ -4,6 +4,7 @@ import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Category as CategoryType } from '@/app/taybs/category.model';
 
 import 'swiper/css';
@@ -34,9 +35,11 @@ export default function CatSliderComp({ categories }: CatSliderProps) {
             <SwiperSlide key={cat._id}>
                 <Link href={`/categories/${cat._id}`} className="category-card group">
                     <div className="category-icon-box">
-                        <img 
-                            src={cat.image} 
-                            alt={cat.name} 
+                        <Image
+                            src={cat.image}
+                            alt={cat.name}
+                            width={100}
+                            height={100}
                             className="category-image"
                         />
                     </div>

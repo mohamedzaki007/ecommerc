@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const isAuthenticated = status === 'authenticated';
     const user = session?.user as UserData || null;
 
-    const login = async (formData: Record<string, unknown>) => {
+    const login = async (_formData: Record<string, unknown>) => {
         return { success: false, message: "Use NextAuth signIn function directly." };
     };
 

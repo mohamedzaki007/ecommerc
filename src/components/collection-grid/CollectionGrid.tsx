@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
 import { FiArrowRight } from 'react-icons/fi';
-import { Card, CardContent } from "@/components/ui/card";
 
 interface CollectionCardProps {
     title: string;
