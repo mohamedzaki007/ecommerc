@@ -10,12 +10,20 @@ interface UserData {
     email: string;
 }
 
+interface SignupData {
+    name: string;
+    email: string;
+    password: string;
+    rePassword: string;
+    phone: string;
+}
+
 interface AuthContextType {
     user: UserData | null;
     isAuthenticated: boolean;
     login: (formData: Record<string, unknown>) => Promise<Record<string, unknown>>;
     logout: () => void;
-    signup: (formData: Record<string, unknown>) => Promise<{ success: boolean; message: string; }>;
+    signup: (formData: SignupData) => Promise<{ success: boolean; message: string; }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -37,7 +45,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signOut({ redirect: true, callbackUrl: '/login' });
     };
 
-    const signup = async (formData: Record<string, unknown>) => {
+    const signup = async (formData: SignupData) => {
         try {
             await axios.post(SIGNUP_API, formData);
             router.push('/login?signupSuccess=true');

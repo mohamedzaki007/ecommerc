@@ -5,10 +5,20 @@ import { useRouter } from "next/navigation";
 import { FiCheckCircle } from "react-icons/fi";
 import { useCart } from "@/context/CartContext";
 
+interface ShippingInfo {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  zip: string;
+  country: string;
+}
+
 export default function OrderConfirmPage() {
   const router = useRouter();
   const { cartItems, totalAmount, clearCart } = useCart();
-  const [shippingInfo, setShippingInfo] = useState<any>(null);
+  const [shippingInfo, setShippingInfo] = useState<ShippingInfo | null>(null);
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
 
   // جلب بيانات الدفع والشحن من localStorage بعد التحميل على المتصفح

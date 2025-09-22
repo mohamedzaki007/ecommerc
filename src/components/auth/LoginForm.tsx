@@ -100,7 +100,6 @@ export default function LoginForm() {
                 </button>
             </form>
 
-            {/* eslint-disable-next-line react/no-unescaped-entities */}
             <p className="mt-4 text-center text-sm text-gray-600">
                 Don't have an account? <Link href="/signup" className="font-medium text-gray-900 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100">Sign Up</Link>
             </p>
